@@ -27,4 +27,77 @@ This Service relies on the following Environement variables
 
 |Variable|Value|
 |:------:|:---:|
-|API_BASE_URL||
+|API_BASE_URL| Http URL to the API layer (backend)|
+|API_SERVICE_TOKEN| Service Token so that the service authenticates to the main backend|
+|OLLAMA_BASE_URL| Http URL to the Ollama LLM Server|
+|OLLAMA_MODEL| Ollama Model Name|
+
+
+### Development / Production
+
+This Service uses dependency injection to promote easily switching the LLM Providers from a cloud based provider like Gemini to a production ready Local LLM like Ollama 2
+
+> [!WARN] Llama Compatibility
+> The Llama API Included here is immature and hasnt had any formal testing and is still considered experimental
+
+
+### API Specification
+
+The AI Service exposes 1 REST Endpoint
+
+- `POST /api/ai/generate`
+
+> This endpoint is responsible for the generation of 1 ai answer
+
+Example Request Body:
+
+```json
+{
+    "chat_id": "C1234",
+    "user_id": "U12054-0220",
+    "message": "What is the availability tomorrow at 8 pm."
+}
+```
+
+
+Example Response Body:
+
+```json
+{
+    "message": "Sure thing, the availability on the 07-02-2026 at 8pm is quite good, since there is only 8 bookings out of the maximum amount of 15..."
+
+}
+```
+
+
+### File Structure
+
+The project is structured as follows
+
+micro-hack-ai-api
+ ┣ app
+ ┃ ┣ agents
+ ┃ ┃ ┣ base.py                  # Agent Interface
+ ┃ ┃ ┣ gemini_agent.py          # Gemini Implementation of the Agent Interface
+ ┃ ┃ ┗ llama_agent.py           # LLama Implementation of the Agent Interface
+ ┃ ┣ prompts
+ ┃ ┃ ┗ system_prompt.txt        # Shared System prompt
+ ┃ ┣ config.py                  # Configuration, automatically loads from environement
+ ┃ ┣ main.py                    # Main FastAPI Entry
+ ┃ ┣ models.py                  # Pydantic Models for requests and reponses
+ ┃ ┗ tools.py                   # Agentic Tools
+ ┣ test
+ ┃ ┣ mock
+ ┃ ┃ ┗ mock_api.py              # Toy API With static data for testing
+ ┃ ┣ integration_test.py        # Full integration Test Suite
+ ┃ ┗ small_test.py              # Small Integration test (sub set of the above)
+ ┣ .dockerignore
+ ┣ .env
+ ┣ .gitignore
+ ┣ .python-version
+ ┣ Dockerfile
+ ┣ pyproject.toml
+ ┣ pytest.ini
+ ┣ README.md
+ ┣ requirements.txt
+ ┗ uv.lock
