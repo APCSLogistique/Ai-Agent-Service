@@ -68,36 +68,3 @@ Example Response Body:
 
 }
 ```
-
-
-### File Structure
-
-The project is structured as follows
-
-micro-hack-ai-api
- ┣ app
- ┃ ┣ agents
- ┃ ┃ ┣ base.py                  # Agent Interface
- ┃ ┃ ┣ gemini_agent.py          # Gemini Implementation of the Agent Interface
- ┃ ┃ ┗ llama_agent.py           # LLama Implementation of the Agent Interface
- ┃ ┣ prompts
- ┃ ┃ ┗ system_prompt.txt        # Shared System prompt
- ┃ ┣ config.py                  # Configuration, automatically loads from environement
- ┃ ┣ main.py                    # Main FastAPI Entry
- ┃ ┣ models.py                  # Pydantic Models for requests and reponses
- ┃ ┗ tools.py                   # Agentic Tools
- ┣ test
- ┃ ┣ mock
- ┃ ┃ ┗ mock_api.py              # Toy API With static data for testing
- ┃ ┣ integration_test.py        # Full integration Test Suite
- ┃ ┗ small_test.py              # Small Integration test (sub set of the above)
- ┣ .dockerignore
- ┣ .env
- ┣ .gitignore
- ┣ .python-version
- ┣ Dockerfile
- ┣ pyproject.toml
- ┣ pytest.ini
- ┣ README.md
- ┣ requirements.txt
- ┗ uv.lock
